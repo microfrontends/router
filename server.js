@@ -24,6 +24,7 @@ const createProxy = ({ path, target }) =>
   server.use(path, proxy({ target, changeOrigin: true, pathRewrite: {[`^${path}`]: ''} }));
 
 server.post('/api/routes', (req, res) => {
+  if (req.query.api_key !== process.env.API_KEY) return res.end('Forbidden');
   const route = req.body;
 
   mongoClient.connect(mongoUrl, (err, db) => {
@@ -38,6 +39,7 @@ server.post('/api/routes', (req, res) => {
 });
 
 server.delete('/api/routes', (req, res) => {
+  if (req.query.api_key !== process.env.API_KEY) return res.end('Forbidden');
   const path = req.body.path;
 
   mongoClient.connect(mongoUrl, (err, db) => {
