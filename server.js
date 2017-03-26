@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoClient = require('mongodb').MongoClient;
 
 const server = express();
-const mongoUrl = 'mongodb://localhost:27017/microfrontends-router';
+const mongoUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/microfrontends-router';
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
